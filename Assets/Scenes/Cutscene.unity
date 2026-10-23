@@ -1472,22 +1472,37 @@ PrefabInstance:
     - target: {fileID: 2207673106622315786, guid: 67c84c3b2d9264f098d261dc1fedb971,
         type: 3}
       propertyPath: cinematicControlled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2207673106622315786, guid: 67c84c3b2d9264f098d261dc1fedb971,
         type: 3}
       propertyPath: cinematicSteps.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2207673106622315786, guid: 67c84c3b2d9264f098d261dc1fedb971,
         type: 3}
       propertyPath: cinematicSteps.Array.data[0].statement
-      value: AHHHHHH
+      value: And the fire is so warm
       objectReference: {fileID: 0}
     - target: {fileID: 2207673106622315786, guid: 67c84c3b2d9264f098d261dc1fedb971,
         type: 3}
       propertyPath: cinematicSteps.Array.data[1].statement
       value: WHOOOOOAAA
+      objectReference: {fileID: 0}
+    - target: {fileID: 2207673106622315786, guid: 67c84c3b2d9264f098d261dc1fedb971,
+        type: 3}
+      propertyPath: cinematicSteps.Array.data[0].location.x
+      value: 2.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2207673106622315786, guid: 67c84c3b2d9264f098d261dc1fedb971,
+        type: 3}
+      propertyPath: cinematicSteps.Array.data[0].location.y
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2207673106622315786, guid: 67c84c3b2d9264f098d261dc1fedb971,
+        type: 3}
+      propertyPath: cinematicSteps.Array.data[0].location.z
+      value: 1.3
       objectReference: {fileID: 0}
     - target: {fileID: 2207673106622315786, guid: 67c84c3b2d9264f098d261dc1fedb971,
         type: 3}
@@ -1507,7 +1522,7 @@ PrefabInstance:
     - target: {fileID: 2207673106622315786, guid: 67c84c3b2d9264f098d261dc1fedb971,
         type: 3}
       propertyPath: cinematicSteps.Array.data[0].timeAtLocation
-      value: 1
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 2207673106622315786, guid: 67c84c3b2d9264f098d261dc1fedb971,
         type: 3}

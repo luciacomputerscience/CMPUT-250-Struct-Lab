@@ -22,7 +22,7 @@ public class Blacksmith : AnimatedEntity
     public bool cinematicControlled = true;
     public List<CinematicStep> cinematicSteps;
     private int _cinematicIndex;
-    private float _cinematicMovementThreshold = 0.05f; 
+    private float _cinematicMovementThreshold = 0.05f;
 
     //Display for cinematics
     public GameObject uiCanvas;
@@ -50,114 +50,144 @@ public class Blacksmith : AnimatedEntity
     void Update()
     {
         //What to do if the player is being controlled by a cinemtic
-        if(cinematicControlled){
-            if(_cinematicIndex<cinematicSteps.Count){
+        if (cinematicControlled)
+        {
+            if (_cinematicIndex < cinematicSteps.Count)
+            {
                 //Move player to first cinematicSteps location if not there yet
-                if((transform.position-cinematicSteps[_cinematicIndex].location).magnitude>_cinematicMovementThreshold){
-                    transform.position+= (cinematicSteps[_cinematicIndex].location-transform.position).normalized*Time.deltaTime*Speed;
+                if ((transform.position - cinematicSteps[_cinematicIndex].location).magnitude > _cinematicMovementThreshold)
+                {
+                    transform.position += (cinematicSteps[_cinematicIndex].location - transform.position).normalized * Time.deltaTime * Speed;
                 }
-                else{
+                else
+                {
                     //Set player location to avoid float issues
                     transform.position = cinematicSteps[_cinematicIndex].location;
-                    if (_cutsceneTimer>=cinematicSteps[_cinematicIndex].timeAtLocation){
-                        _cinematicIndex+=1;//Move on to next step if there is one
-                        _cutsceneTimer=0;
+                    if (_cutsceneTimer >= cinematicSteps[_cinematicIndex].timeAtLocation)
+                    {
+                        _cinematicIndex += 1;//Move on to next step if there is one
+                        _cutsceneTimer = 0;
                         uiCanvas.SetActive(false);
                     }
-                    else{
+                    else
+                    {
                         //Display text during timer if there is any
-                        if(cinematicSteps[_cinematicIndex].statement!=""){
+                        if (cinematicSteps[_cinematicIndex].statement != "")
+                        {
                             uiCanvas.SetActive(true);
                             text.text = cinematicSteps[_cinematicIndex].statement;
                         }
 
-                        _cutsceneTimer+=Time.deltaTime;
+                        _cutsceneTimer += Time.deltaTime;
                     }
                 }
             }
-            else{
+            else
+            {
                 // Return control to the player at the end of this
                 cinematicControlled = false;
             }
         }
-        else{
+        else
+        {
             //Movement controls if not cinematic controlled
-            if(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)){
-                transform.position+= (Vector3.up+Vector3.forward)*Time.deltaTime*Speed;
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+            {
+                transform.position += (Vector3.up + Vector3.forward) * Time.deltaTime * Speed;
             }
-            if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)){
-                transform.position+= Vector3.left*Time.deltaTime*Speed;
+            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+            {
+                transform.position += Vector3.left * Time.deltaTime * Speed;
             }
-            if(Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)){
-                transform.position+= (Vector3.down+Vector3.back)*Time.deltaTime*Speed;
+            if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+            {
+                transform.position += (Vector3.down + Vector3.back) * Time.deltaTime * Speed;
             }
-            if(Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)){
-                transform.position+= Vector3.right*Time.deltaTime*Speed;
+            if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+            {
+                transform.position += Vector3.right * Time.deltaTime * Speed;
             }
         }
 
         //Animation Update based on movement
-        if((transform.position.y-_priorPosition.y)>minDiff){
+        if ((transform.position.y - _priorPosition.y) > minDiff)
+        {
             //Moving Up
-            if(_direction!=0){
+            if (_direction != 0)
+            {
                 _direction = 0;
                 DefaultAnimationCycle = upWalkCycle;
             }
         }
-        if((_priorPosition.y-transform.position.y)>minDiff){
+        if ((_priorPosition.y - transform.position.y) > minDiff)
+        {
             //Moving Down
-            if(_direction!=2){
+            if (_direction != 2)
+            {
                 _direction = 2;
                 DefaultAnimationCycle = downWalkCycle;
             }
         }
 
-        if((transform.position.x-_priorPosition.x)>minDiff){
+        if ((transform.position.x - _priorPosition.x) > minDiff)
+        {
             //Moving right
-            if(_direction!=1){
+            if (_direction != 1)
+            {
                 _direction = 1;
                 DefaultAnimationCycle = rightWalkCycle;
             }
         }
-        if((_priorPosition.x-transform.position.x)>minDiff){
+        if ((_priorPosition.x - transform.position.x) > minDiff)
+        {
             //Moving left
-            if(_direction!=3){
+            if (_direction != 3)
+            {
                 _direction = 3;
                 DefaultAnimationCycle = leftWalkCycle;
             }
         }
 
         //Animation Handling!
-        if((_priorPosition-transform.position).magnitude>minDiff){
+        if ((_priorPosition - transform.position).magnitude > minDiff)
+        {
             AnimationUpdate();//Animate if moving
         }
-        else{//Pick idle sprite if not moving
-            if(_direction==0){
+        else
+        {//Pick idle sprite if not moving
+            if (_direction == 0)
+            {
                 SpriteRenderer.sprite = idleUp;
             }
-            else if(_direction==1){
+            else if (_direction == 1)
+            {
                 SpriteRenderer.sprite = idleRight;
             }
-            else if(_direction==2){
+            else if (_direction == 2)
+            {
                 SpriteRenderer.sprite = idleDown;
             }
-            else if(_direction==3){
+            else if (_direction == 3)
+            {
                 SpriteRenderer.sprite = idleLeft;
             }
-            
+
         }
 
         //Grab the priorPosition
         _priorPosition = transform.position;
     }
 
-    void OnTriggerEnter(Collider other){
+    void OnTriggerEnter(Collider other)
+    {
         Enemy enemy = other.gameObject.GetComponent<Enemy>();
 
-        if(enemy!=null){
+        if (enemy != null)
+        {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
-        else{
+        else
+        {
             Time.timeScale = 0;
             uiCanvas.SetActive(true);
             text.text = "I win!";
